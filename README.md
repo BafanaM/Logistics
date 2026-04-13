@@ -38,7 +38,7 @@ This project is structured to match the exercise goals: **clear layering**, **co
 
 ## Challenge requirements → implementation
 
-| Requirement | What we did |
+| Requirement | What was done |
 |-------------|-------------|
 | Read inbound records from JSON via a **mock interface** | `ConsignmentGateway` + `MockConsignmentGateway` reads `app/src/main/assets/sample_consignments.json`. |
 | **Persist locally** | **Room**: `local_consignment` + `sync_queue` (`ConsignmentDatabase`, DAOs, `ConsignmentRepositoryImpl`). |
