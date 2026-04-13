@@ -1,0 +1,42 @@
+[
+  {
+    "consignmentId": "CG-1001",
+    "customerCode": "ACME",
+    "itemCount": 4,
+    "lastUpdated": "2026-04-01T09:15:00Z",
+    "status": "OPEN",
+    "payloadHash": "a1b2c3"
+  },
+  {
+    "consignmentId": "CG-1002",
+    "customerCode": "GLOBEX",
+    "itemCount": 1,
+    "lastUpdated": "2026-04-01T10:00:00Z",
+    "status": "IN_TRANSIT",
+    "payloadHash": "d4e5f6"
+  },
+  {
+    "consignmentId": "CG-1003",
+    "customerCode": "",
+    "itemCount": 2,
+    "lastUpdated": "2026-04-01T11:30:00Z",
+    "status": "OPEN",
+    "payloadHash": "badcust"
+  },
+  {
+    "consignmentId": "CG-1001",
+    "customerCode": "ACME",
+    "itemCount": 99,
+    "lastUpdated": "2026-04-02T08:00:00Z",
+    "status": "UPDATED",
+    "payloadHash": "duplicate"
+  },
+  {
+    "consignmentId": "CG-1004",
+    "customerCode": "WAYNE",
+    "itemCount": 0,
+    "lastUpdated": "2026-04-03T12:00:00Z",
+    "status": "DELIVERED",
+    "payloadHash": "zeroitems"
+  }
+]
