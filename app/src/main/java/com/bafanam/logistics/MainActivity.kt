@@ -5,15 +5,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.bafanam.logistics.ui.ConsignmentRoute
+import com.bafanam.logistics.ui.ConsignmentViewModel
 import com.bafanam.logistics.ui.theme.LogisticsTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,15 +21,11 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LogisticsTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Surface(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(innerPadding),
-                        color = MaterialTheme.colorScheme.background
-                    ) {
-                        Greeting(name = "Logistics")
-                    }
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background,
+                ) {
+                    LogisticsRoot()
                 }
             }
         }
@@ -38,18 +33,8 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Welcome to $name",
-        modifier = modifier.padding(24.dp),
-        style = MaterialTheme.typography.headlineMedium
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    LogisticsTheme {
-        Greeting("Logistics")
-    }
+private fun LogisticsRoot() {
+    val container = (LocalContext.current.applicationContext as LogisticsApplication).appContainer
+    val vm: ConsignmentViewModel = viewModel(factory = ConsignmentViewModel.factory(container))
+    ConsignmentRoute(vm)
 }
