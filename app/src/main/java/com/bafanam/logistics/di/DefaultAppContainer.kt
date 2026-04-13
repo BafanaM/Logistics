@@ -8,6 +8,7 @@ import com.bafanam.logistics.data.sync.MockOutboundSyncClient
 import com.bafanam.logistics.domain.gateway.ConsignmentGateway
 import com.bafanam.logistics.domain.port.OutboundSyncClient
 import com.bafanam.logistics.domain.repository.ConsignmentRepository
+import com.bafanam.logistics.usecase.ClearLocalDataUseCase
 import com.bafanam.logistics.usecase.EnqueueValidatedConsignmentsUseCase
 import com.bafanam.logistics.usecase.IntakeConsignmentsUseCase
 import com.bafanam.logistics.usecase.ObserveConsignmentsUseCase
@@ -50,5 +51,9 @@ class DefaultAppContainer(context: Context) : AppContainer {
 
     override val retryFailedConsignment: RetryFailedConsignmentUseCase by lazy {
         RetryFailedConsignmentUseCase(repository)
+    }
+
+    override val clearLocalData: ClearLocalDataUseCase by lazy {
+        ClearLocalDataUseCase(repository)
     }
 }

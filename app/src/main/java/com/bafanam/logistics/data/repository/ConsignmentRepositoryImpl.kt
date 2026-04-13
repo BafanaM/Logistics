@@ -158,6 +158,12 @@ class ConsignmentRepositoryImpl(
         return processed
     }
 
+    override suspend fun clearAllLocalData() {
+        db.withTransaction {
+            db.clearAllTables()
+        }
+    }
+
     override suspend fun retryFailed(recordId: Long): Boolean = db.withTransaction {
         val record = localDao.getById(recordId) ?: return@withTransaction false
         if (record.status != ConsignmentRecordStatus.FAILED) return@withTransaction false

@@ -15,4 +15,5 @@ interface ConsignmentRepository {
     suspend fun enqueueAllValidated(): Int
     suspend fun processSyncQueue(client: OutboundSyncClient): Int
     suspend fun retryFailed(recordId: Long): Boolean
+    suspend fun clearAllLocalData()
 }

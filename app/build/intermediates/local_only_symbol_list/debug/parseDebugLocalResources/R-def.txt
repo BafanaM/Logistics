@@ -43,6 +43,11 @@ string queue_line
 string queue_outcome_delivered
 string queue_outcome_error
 string queue_outcome_waiting
+string reset_data_button
+string reset_data_confirm
+string reset_data_dismiss
+string reset_data_message
+string reset_data_title
 string retry_count_line
 string retry_sync
 string screen_subtitle

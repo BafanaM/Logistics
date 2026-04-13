@@ -289,6 +289,11 @@ int string queue_outcome_error 0x7f090077
 int string queue_outcome_waiting 0x7f090078
 int string range_end 0x7f09004c
 int string range_start 0x7f09004d
+int string reset_data_button 0x7f0900ad
+int string reset_data_confirm 0x7f0900ae
+int string reset_data_dismiss 0x7f0900af
+int string reset_data_message 0x7f0900b0
+int string reset_data_title 0x7f0900b1
 int string retry_count_line 0x7f090079
 int string retry_sync 0x7f09007a
 int string screen_subtitle 0x7f09007b

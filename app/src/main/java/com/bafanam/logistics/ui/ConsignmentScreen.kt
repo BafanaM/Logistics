@@ -27,6 +27,7 @@ import androidx.compose.material.icons.outlined.Inventory2
 import androidx.compose.material.icons.outlined.LocalShipping
 import androidx.compose.material.icons.outlined.PlaylistAdd
 import androidx.compose.material.icons.outlined.Schedule
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -40,11 +41,14 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -80,6 +84,7 @@ fun ConsignmentRoute(viewModel: ConsignmentViewModel) {
         onEnqueue = viewModel::runEnqueue,
         onSync = viewModel::runSync,
         onRetry = viewModel::retry,
+        onClearAll = viewModel::clearAllAndRestart,
     )
 }
 
@@ -92,6 +97,7 @@ fun ConsignmentScreen(
     onEnqueue: () -> Unit,
     onSync: () -> Unit,
     onRetry: (Long) -> Unit,
+    onClearAll: () -> Unit,
 ) {
     val guide = remember(uiState.rows) { dispatchGuide(uiState.rows) }
     val activeFlowStep = remember(guide) { flowStepHighlight(guide) }
@@ -149,6 +155,12 @@ fun ConsignmentScreen(
                 }
                 item {
                     OverviewCard(rows = uiState.rows)
+                }
+                item {
+                    ClearDataSection(
+                        enabled = !uiState.isBusy,
+                        onClearAll = onClearAll,
+                    )
                 }
                 item {
                     Text(
@@ -213,6 +225,51 @@ private fun LoadingOverlay() {
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun ClearDataSection(
+    enabled: Boolean,
+    onClearAll: () -> Unit,
+) {
+    var showConfirm by remember { mutableStateOf(false) }
+    if (showConfirm) {
+        AlertDialog(
+            onDismissRequest = { showConfirm = false },
+            title = { Text(stringResource(R.string.reset_data_title)) },
+            text = { Text(stringResource(R.string.reset_data_message)) },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showConfirm = false
+                        onClearAll()
+                    },
+                ) {
+                    Text(
+                        stringResource(R.string.reset_data_confirm),
+                        color = MaterialTheme.colorScheme.error,
+                        fontWeight = FontWeight.SemiBold,
+                    )
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showConfirm = false }) {
+                    Text(stringResource(R.string.reset_data_dismiss))
+                }
+            },
+        )
+    }
+    OutlinedButton(
+        onClick = { showConfirm = true },
+        enabled = enabled,
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(12.dp),
+    ) {
+        Text(
+            stringResource(R.string.reset_data_button),
+            color = MaterialTheme.colorScheme.error,
+        )
     }
 }
 

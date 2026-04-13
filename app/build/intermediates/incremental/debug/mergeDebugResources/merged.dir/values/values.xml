@@ -225,6 +225,11 @@
     <string name="queue_outcome_waiting">Awaiting pickup</string>
     <string name="range_end">"Range end"</string>
     <string name="range_start">"Range start"</string>
+    <string name="reset_data_button">Clear all data</string>
+    <string name="reset_data_confirm">Clear</string>
+    <string name="reset_data_dismiss">Cancel</string>
+    <string name="reset_data_message">This removes all deliveries and queue data from this device. You can import orders again afterward.</string>
+    <string name="reset_data_title">Clear everything?</string>
     <string name="retry_count_line">Re-attempts: %1$d</string>
     <string name="retry_sync">Retry delivery</string>
     <string name="screen_subtitle">Your stops and dispatch tools</string>

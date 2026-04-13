@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.bafanam.logistics.di.AppContainer
+import com.bafanam.logistics.usecase.ClearLocalDataUseCase
 import com.bafanam.logistics.usecase.EnqueueValidatedConsignmentsUseCase
 import com.bafanam.logistics.usecase.IntakeConsignmentsUseCase
 import com.bafanam.logistics.usecase.ObserveConsignmentsUseCase
@@ -24,6 +25,7 @@ class ConsignmentViewModel(
     private val enqueueValidated: EnqueueValidatedConsignmentsUseCase,
     private val processSyncQueue: ProcessSyncQueueUseCase,
     private val retryFailedConsignment: RetryFailedConsignmentUseCase,
+    private val clearLocalData: ClearLocalDataUseCase,
 ) : ViewModel() {
 
     private val _isBusy = MutableStateFlow(false)
@@ -70,6 +72,14 @@ class ConsignmentViewModel(
         }
     }
 
+    fun clearAllAndRestart() = viewModelScope.launch {
+        withBusy {
+            runCatching { clearLocalData() }
+                .onSuccess { sendMessage("All data cleared. Tap Import orders to start again.") }
+                .onFailure { sendMessage(it.message ?: it.toString()) }
+        }
+    }
+
     fun retry(recordId: Long) = viewModelScope.launch {
         withBusy {
             runCatching { retryFailedConsignment(recordId) }
@@ -111,6 +121,7 @@ class ConsignmentViewModel(
                         enqueueValidated = container.enqueueValidated,
                         processSyncQueue = container.processSyncQueue,
                         retryFailedConsignment = container.retryFailedConsignment,
+                        clearLocalData = container.clearLocalData,
                     ) as T
                 }
                 throw IllegalArgumentException("Unknown ViewModel: $modelClass")

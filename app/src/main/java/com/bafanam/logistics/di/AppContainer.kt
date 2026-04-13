@@ -1,5 +1,6 @@
 package com.bafanam.logistics.di
 
+import com.bafanam.logistics.usecase.ClearLocalDataUseCase
 import com.bafanam.logistics.usecase.EnqueueValidatedConsignmentsUseCase
 import com.bafanam.logistics.usecase.IntakeConsignmentsUseCase
 import com.bafanam.logistics.usecase.ObserveConsignmentsUseCase
@@ -15,4 +16,5 @@ interface AppContainer {
     val enqueueValidated: EnqueueValidatedConsignmentsUseCase
     val processSyncQueue: ProcessSyncQueueUseCase
     val retryFailedConsignment: RetryFailedConsignmentUseCase
+    val clearLocalData: ClearLocalDataUseCase
 }
